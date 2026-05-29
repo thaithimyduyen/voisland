@@ -1,0 +1,524 @@
+ body,
+ html {
+     margin: 0;
+     padding: 0;
+     height: 100%;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+     overflow-y: auto;
+ }
+
+ #scene {
+     position: relative;
+     width: 100vw;
+     min-height: 100dvh;
+     background-color: #87CEEB;
+ }
+
+ /* --- NÂNG CẤP: Mặt đất có độ cong --- */
+ #ground {
+     position: absolute;
+     bottom: 0;
+     width: 100%;
+     height: 30%;
+     /* Tạo đường cong parabola mềm mại trên mặt đất */
+     border-radius: 100% 100% 0 0;
+     background: linear-gradient(to bottom, #7CFC00, #228B22);
+     z-index: 10;
+ }
+
+ .branch {
+     position: absolute;
+     width: 6px;
+     height: 40px;
+     background: #8B4513;
+     transform-origin: bottom center;
+ }
+
+ .leaf {
+     position: absolute;
+     width: 14px;
+     height: 20px;
+     background: #2ecc71;
+     border-radius: 50%;
+     transform-origin: center;
+ }
+
+ #elements-layer {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     z-index: 50;
+ }
+
+ /* Bảng điều khiển tối ưu */
+ #controls {
+     position: fixed;
+     top: 20px;
+     right: 20px;
+     width: auto;
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+
+     max-height: 90vh;
+     /* 👈 quan trọng */
+     overflow-y: auto;
+
+     z-index: 999;
+ }
+
+ #controls button {
+     width: 50px;
+     height: 50px;
+
+     font-size: 30px;
+     border-radius: 50%;
+
+     border: none;
+     cursor: pointer;
+
+     background: rgba(255, 255, 255, 0.8);
+     backdrop-filter: blur(6px);
+
+     transition: all 0.2s ease;
+ }
+
+ #controls button:hover {
+     transform: scale(1.2);
+     background: white;
+ }
+
+ .letter {
+     filter: drop-shadow(0 0 10px rgba(255, 255, 200, 0.5));
+ }
+
+
+ /* --- CSS VẬT THỂ --- */
+ .sun {
+     position: absolute;
+     width: 100px;
+     height: 100px;
+     background: radial-gradient(circle, #FFD700, #FF8C00);
+     border-radius: 50%;
+     box-shadow: 0 0 50px #FFD700;
+     bottom: 30%;
+     left: 20%;
+ }
+
+ .moon {
+     position: absolute;
+     width: 80px;
+     height: 80px;
+     background: #f6f1d5;
+     border-radius: 50%;
+     box-shadow: 0 0 40px rgba(255, 255, 255, 0.5), inset -15px -15px 0 0px #e8e2c8;
+     bottom: 30%;
+     right: 25%;
+ }
+
+ .flower {
+     position: absolute;
+     bottom: 30%;
+     transform: translateY(50%);
+     /* 🔥 đẩy xuống để chạm cỏ */
+ }
+
+ .flower-head {
+     position: relative;
+     width: 30px;
+     height: 30px;
+ }
+
+ /* cánh hoa */
+ .petal {
+     position: absolute;
+     width: 12px;
+     height: 22px;
+     border-radius: 50%;
+     transform-origin: center bottom;
+ }
+
+ /* nhụy */
+ /* .center {
+     position: absolute;
+     width: 10px;
+     height: 10px;
+     background: radial-gradient(circle, yellow, orange);
+     border-radius: 50%;
+     top: 10px;
+     left: 10px;
+ } */
+
+ .raindrop {
+     position: absolute;
+     width: 2px;
+     height: 15px;
+     background-color: rgba(255, 255, 255, 0.7);
+     top: -20px;
+ }
+
+ /* --- NÂNG CẤP: Hình dáng Mây ngẫu nhiên --- */
+ .cloud {
+     position: absolute;
+     background: rgba(255, 255, 255, 0.9);
+     width: 120px;
+     height: 40px;
+     border-radius: 50px;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+ }
+
+ /* Pseudo-elements để nặn mây - sẽ được ngẫu nhiên hóa bằng JS */
+ .cloud::before {
+     content: '';
+     position: absolute;
+     background: rgba(255, 255, 255, 0.9);
+     width: 60px;
+     height: 60px;
+     border-radius: 50%;
+     top: -30px;
+     left: 15px;
+ }
+
+ .cloud::after {
+     content: '';
+     position: absolute;
+     background: rgba(255, 255, 255, 0.9);
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     top: -40px;
+     right: 15px;
+ }
+
+ /* Ngôi sao */
+ .star {
+     position: absolute;
+     width: 3px;
+     height: 3px;
+     background-color: white;
+     border-radius: 50%;
+     box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+ }
+
+ /* --- LỆNH MỚI: Cấu trúc Object Cây --- */
+ .tree {
+     position: absolute;
+     bottom: 30%;
+     /* Vị trí gốc cây trên mặt đất */
+     width: 30px;
+     /* Thân cây */
+     height: 0px;
+     /* Bắt đầu với chiều cao 0 để mọc */
+     background-color: #8B4513;
+     /* Màu nâu thân cây */
+     transform-origin: bottom center;
+     z-index: 5;
+     /* Nằm sau layer cỏ */
+ }
+
+ /* Pseudo-elements để nặn tán lá cây bo tròn */
+ .foliage {
+     position: absolute;
+     top: -80px;
+     left: -25px;
+     width: 80px;
+     height: 80px;
+     background: linear-gradient(to bottom, #7CFC00, #228B22);
+     border-radius: 50%;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+     opacity: 0;
+     transform: scale(0);
+     /* Bắt đầu ẩn để nở */
+ }
+
+ .foliage::before {
+     content: '';
+     position: absolute;
+     width: 60px;
+     height: 60px;
+     background: inherit;
+     border-radius: inherit;
+     top: -20px;
+     left: -15px;
+ }
+
+ .foliage::after {
+     content: '';
+     position: absolute;
+     width: 70px;
+     height: 70px;
+     background: inherit;
+     border-radius: inherit;
+     top: -30px;
+     right: -15px;
+ }
+
+ #title {
+     position: absolute;
+     bottom: 25%;
+     width: 100%;
+     text-align: center;
+     z-index: 15;
+ }
+
+ .letter {
+     display: inline-block;
+     font-size: 70px;
+     font-weight: 900;
+     color: white;
+     font-family: Impact, fantasy;
+     margin: 0 5px;
+
+     /* 🔥 fake 3D */
+     text-shadow:
+         1px 1px 0 #999,
+         2px 2px 0 #888,
+         3px 3px 0 #777,
+         4px 4px 0 #666,
+         5px 5px 10px rgba(0, 0, 0, 0.5);
+
+     transform: translateY(100px);
+     opacity: 0;
+ }
+
+ .rainbow {
+     position: absolute;
+     bottom: 20%;
+     /* 👈 đúng bằng ground */
+     left: 50%;
+     transform: translateX(-50%);
+     width: 100vw;
+     height: 50vh;
+     z-index: 9;
+     pointer-events: none;
+ }
+
+ .rainbow-layer {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     border-radius: inherit;
+     border: 40px solid;
+     box-sizing: border-box;
+ }
+
+ @media (max-width: 1024px) {
+     .letter {
+         font-size: 70px;
+     }
+
+     .rainbow {
+         bottom: 18%;
+         /* 👈 hạ xuống gần ground hơn */
+         height: 40vh;
+         /* 👈 giảm chiều cao để không bị lơ lửng */
+     }
+ }
+
+ @media (max-width: 768px) {
+     .letter {
+         font-size: 60px;
+     }
+
+     .rainbow {
+         bottom: 18%;
+         /* 👈 hạ xuống gần ground hơn */
+         height: 40vh;
+         /* 👈 giảm chiều cao để không bị lơ lửng */
+     }
+ }
+
+ @media (max-width: 430px) {
+     .letter {
+         font-size: 50px;
+     }
+
+     .rainbow {
+         bottom: 16%;
+         /* 👈 hạ xuống gần ground hơn */
+         height: 40vh;
+         /* 👈 giảm chiều cao để không bị lơ lửng */
+     }
+ }
+
+ /* scale sâu hơn để tạo chiều dày */
+ .red {
+     border-color: red transparent transparent transparent;
+ }
+
+ .orange {
+     border-color: orange transparent transparent transparent;
+     transform: scale(0.9);
+ }
+
+ .yellow {
+     border-color: yellow transparent transparent transparent;
+     transform: scale(0.8);
+ }
+
+ .green {
+     border-color: #2ecc71 transparent transparent transparent;
+     transform: scale(0.7);
+ }
+
+ .blue {
+     border-color: #3498db transparent transparent transparent;
+     transform: scale(0.6);
+ }
+
+ .indigo {
+     border-color: indigo transparent transparent transparent;
+     transform: scale(0.5);
+ }
+
+ .violet {
+     border-color: violet transparent transparent transparent;
+     transform: scale(0.4);
+ }
+
+ .bird {
+     position: absolute;
+     z-index: 20;
+     pointer-events: none;
+ }
+
+ /* cánh */
+ .wing {
+     position: absolute;
+     width: 12px;
+     height: 4px;
+     background: black;
+     border-radius: 50%;
+     transform-origin: center;
+ }
+
+ .wing.left {
+     left: 0;
+ }
+
+ .wing.right {
+     right: 0;
+ }
+
+ .cloud-text {
+     position: absolute;
+     top: 30%;
+     left: 50%;
+     transform: translateX(-50%);
+     display: flex;
+     gap: 10px;
+     z-index: 30;
+ }
+
+ .cloud-letter {
+     position: relative;
+     width: 80px;
+     height: 60px;
+     background: white;
+     border-radius: 50%;
+     box-shadow:
+         20px 0 0 white,
+         -20px 0 0 white,
+         10px -10px 0 white,
+         -10px -10px 0 white;
+     opacity: 0;
+ }
+
+ #nameInput:focus {
+     outline: none;
+     border-color: #3498db;
+     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+ }
+
+ .rainbow::after {
+     content: "";
+     position: absolute;
+     inset: 0;
+
+     background: linear-gradient(120deg,
+             transparent 20%,
+             rgba(255, 255, 255, 0.4) 40%,
+             rgba(255, 255, 255, 0.8) 50%,
+             rgba(255, 255, 255, 0.4) 60%,
+             transparent 80%);
+
+     mix-blend-mode: screen;
+     pointer-events: none;
+
+     opacity: 0.8;
+ }
+
+ #grass-overlay {
+     position: absolute;
+     bottom: 30%;
+     width: 100%;
+     height: 30px;
+     background: linear-gradient(to top, #2e8b57, transparent);
+     z-index: 25;
+ }
+
+ .flying-petal {
+     position: fixed;
+     width: 8px;
+     height: 16px;
+     background: pink;
+     border-radius: 50%;
+     pointer-events: none;
+     z-index: 100;
+ }
+
+ .snowflake {
+     position: fixed;
+     top: -10px;
+     width: 6px;
+     height: 6px;
+     background: white;
+     border-radius: 50%;
+     pointer-events: none;
+     z-index: 50;
+     box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+ }
+
+ #snow-ground {
+     position: absolute;
+     bottom: 30%;
+     width: 100%;
+     height: 0%;
+     background: white;
+     z-index: 15;
+     pointer-events: none;
+     transition: height 2s ease;
+ }
+
+ .shooting-star-real {
+     position: fixed;
+     width: 3px;
+     height: 3px;
+     background: white;
+     border-radius: 50%;
+     pointer-events: none;
+     z-index: 200;
+
+     box-shadow:
+         0 0 10px white,
+         0 0 20px white,
+         0 0 40px rgba(255, 255, 255, 0.8);
+ }
+
+ .shooting-star-real::after {
+     content: "";
+     position: absolute;
+     top: 40%;
+     left: -150px;
+     width: 150px;
+     height: 2px;
+
+     background: linear-gradient(to left,
+             rgba(255, 255, 255, 0.8),
+             rgba(255, 255, 255, 0.3),
+             transparent);
+
+     transform: translateY(-50%);
+ }

@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://127.0.0.1:5501/index.html -->
+<html lang="vi">
+<script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js"
+  id="eppiocemhmnlbhjplcgkofciiegomcon"></script>
+<script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script>
+<script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script bis_use="true" type="text/javascript" charset="utf-8"
+    data-bis-config="{&quot;blacklistIframeSrc&quot;:[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//www.google.com/recaptcha/enterprise/anchor&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;,&quot;//www.ukrnafta.com/data/map/&quot;,&quot;//maps.google.com/maps&quot;,&quot;//www.openstreetmap.org/export/embed.html&quot;,&quot;//www.google.com/maps/d/u/3/embed&quot;,&quot;//itm.ebaydesc.com/itmdesc&quot;,&quot;//books.google.com/books&quot;,&quot;//embed.podcasts.apple.com&quot;,&quot;//www.paypal.com/smartchat&quot;,&quot;//www.centurylink.com/assets/includes/common/sfChatiFrame.html&quot;,&quot;//macmillan-prod-gen.ada.support/embed&quot;,&quot;//macmillan-prod-gen.ada.support/chat&quot;,&quot;//ctl-consumer.my.site.com/&quot;],&quot;whitelistDomainsForPostBody&quot;:[&quot;youtube.com&quot;]}"
+    data-dynamic-id="6f0f4a34-2e7f-4a60-ba83-343c885ca71a"
+    src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOI'S LAND</title>
+  <script src="gsap.min.js"></script>
+  <link href="style.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="favicon_io/site.webmanifest">
+  <script bis_use="true" type="text/javascript" charset="utf-8" nonce=""
+    data-dynamic-id="6f0f4a34-2e7f-4a60-ba83-343c885ca71a"
+    src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/101.js"></script>
+</head>
+
+<body
+  bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJUSUtUT0siOiJkaXNhYmxlZCIsIkxJTktFRElOIjoiZW5hYmxlZCIsIkNPTkZJRyI6ImRpc2FibGVkIn0sInZlcnNpb24iOiIyLjAuNDciLCJzY29yZSI6MjAwNDcwfV0="
+  __processed_6dfc5574-9828-47da-9fc3-a605418bc321__="true">
+  <div id="scene" bis_skin_checked="1">
+    <div id="controls">
+      <button id="sun" onclick="animateSun()">☀️</button>
+      <button id="moon" onclick="animateNight()">🌙</button>
+      <button onclick="animateCloud()">☁️</button>
+      <button onclick="animateStars()">✨</button>
+      <button id="flower" onclick="animateFlower()">🌷</button>
+      <button onclick="animateRain()">🌧️</button>
+      <button onclick="createRainbow()">🌈</button>
+      <!-- <button onclick="createHollywoodText()">🎬</button> -->
+      <button onclick="blowWind()">💨</button>
+      <button onclick="startSnow()">❄️</button>
+      <button onclick="meteorShower()">☄️</button>
+      <button onclick="fullReset()">🔄</button>
+      <!-- <button onclick="stopSnow()">⛔</button> -->
+    </div>
+
+    <div id="title" bis_skin_checked="1"></div>
+
+    <div id="elements-layer" bis_skin_checked="1"></div>
+    <div id="ground" bis_skin_checked="1"></div>
+    <div id="snow-ground" bis_skin_checked="1"></div>
+  </div>
+
+  <script>
+    const scene = document.getElementById('scene');
+    const elementsLayer = document.getElementById('elements-layer');
+    let rainInterval = null;
+    const usedPositions = [];
+    let isNight = false;
+    const birdSVG = `
+<svg viewBox="0 0 100 50" width="40" height="20">
+  <path d="M5 25 Q 25 5, 50 25 Q 75 45, 95 25" 
+        fill="none" stroke="black" stroke-width="4" stroke-linecap="round"/>
+</svg>
+`;
+
+    function fullReset() {
+      location.reload();
+    }
+
+    function getSafePosition() {
+      let x;
+      let safe = false;
+
+      while (!safe) {
+        x = Math.random() * 80 + 10;
+        safe = !usedPositions.some(p => Math.abs(p - x) < 5);
+      }
+
+      usedPositions.push(x);
+      return x;
+    }
+
+
+    function shootStarSweep() {
+      const star = document.createElement('div');
+      star.className = 'shooting-star-real';
+
+      const startX = window.innerWidth;
+      const startY = Math.random() * window.innerHeight * 0.5;
+
+      star.style.left = startX + 'px';
+      star.style.top = startY + 'px';
+
+      // ⭐ size khác nhau
+      const size = 2 + Math.random() * 4;
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+
+      // ✨ độ sáng khác nhau
+      star.style.opacity = 0.6 + Math.random() * 0.4;
+
+      document.body.appendChild(star);
+
+      const dx = - (window.innerWidth + 500);
+      const dy = 350;
+
+      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      star.style.transform = `rotate(${angle}deg)`;
+
+      // ⚡ tốc độ khác nhau
+      const duration = 1.2 + Math.random() * 1;
+
+      gsap.to(star, {
+        x: dx,
+        y: dy,
+        duration: duration,
+        ease: "none",
+        onComplete: () => star.remove()
+      });
+
+    }
+
+    function meteorShower() {
+      console.log("isNight", isNight)
+      if (!isNight) {
+        hintButton("moon");
+        return;
+      }
+      for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+          shootStarSweep();
+        }, Math.random() * 1000);
+      }
+    }
+
+    function createHollywoodText() {
+      const title = document.getElementById("title");
+      title.innerHTML = "";
+
+      const text = "VOI'S LAND";
+
+      text.split("").forEach((char, i) => {
+        const span = document.createElement("span");
+        span.className = "letter";
+        span.innerText = char;
+
+        title.appendChild(span);
+
+        // animation từng chữ bay lên
+        gsap.to(span, {
+          y: 0,
+          opacity: 1,
+          delay: i * 0.1,
+          duration: 1,
+          ease: "back.out(1.7)"
+        });
+      });
+    }
+
+    function animateSun() {
+      isNight = false
+      gsap.to(scene, { backgroundColor: '#87CEEB', duration: 2 });
+      const moon = document.querySelector('.moon');
+      if (moon) gsap.to(moon, { y: 150, opacity: 0, duration: 1.5, ease: "power2.in", onComplete: () => moon.remove() });
+
+      if (!document.querySelector('.sun')) {
+        const sun = document.createElement('div');
+        sun.className = 'sun';
+        elementsLayer.appendChild(sun);
+        gsap.fromTo(sun, { y: 150, opacity: 0 }, { y: -250, opacity: 1, duration: 2.5, ease: "power2.out" });
+      }
+    }
+
+    function hintButton(name) {
+      const sunBtn = document.getElementById(name);
+      // 🔥 effect mạnh hơn cho dễ thấy
+      gsap.fromTo(sunBtn,
+        { scale: 1, backgroundColor: "#fff" },
+        {
+          scale: 1.5,
+          backgroundColor: "#ffe066",
+          repeat: 5,
+          yoyo: true,
+          duration: 0.25
+        }
+      );
+    }
+
+    function animateNight() {
+      isNight = true;
+      gsap.to(scene, { backgroundColor: '#0B0C10', duration: 2 });
+      const sun = document.querySelector('.sun');
+      if (sun) gsap.to(sun, { y: 150, opacity: 0, duration: 1.5, ease: "power2.in", onComplete: () => sun.remove() });
+      document.querySelectorAll('.rainbow').forEach(e => e.remove());
+
+      if (!document.querySelector('.moon')) {
+        const moon = document.createElement('div');
+        moon.className = 'moon';
+        elementsLayer.appendChild(moon);
+        gsap.fromTo(moon, { y: 150, opacity: 0 }, { y: -300, opacity: 1, duration: 2.5, ease: "power2.out" });
+      }
+    }
+
+    // --- NÂNG CẤP: Lệnh Mây với hình dạng ngẫu nhiên ---
+    function animateCloud() {
+      const cloud = document.createElement('div');
+      cloud.className = 'cloud';
+
+      // Đặt vị trí Y ngẫu nhiên trên bầu trời
+      cloud.style.top = (Math.random() * 35 + 5) + '%';
+      cloud.style.left = '-150px'; // Bắt đầu từ ngoài rìa trái
+
+      // Ngẫu nhiên hóa kích thước đám mây chính
+      cloud.style.width = (Math.random() * 80 + 100) + 'px';
+      cloud.style.height = (Math.random() * 20 + 30) + 'px';
+
+      // Ngẫu nhiên hóa bo góc đám mây chính
+      cloud.style.borderRadius = (Math.random() * 30 + 30) + 'px';
+
+      elementsLayer.appendChild(cloud);
+
+      // Hoạt ảnh trôi dạt sang phải
+      gsap.to(cloud, {
+        x: window.innerWidth + 300,
+        duration: Math.random() * 15 + 15,
+        ease: "none",
+        onComplete: () => cloud.remove()
+      });
+    }
+
+    // --- Logic Ban Đêm đã được giữ nguyên khi Thêm Sao ---
+    function animateStars() {
+      if (!isNight) {
+        hintButton("moon");
+        return;
+      }
+      gsap.to(scene, { backgroundColor: '#0B0C10', duration: 2 });
+
+      for (let i = 0; i < 30; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.top = (Math.random() * 60) + '%';
+        star.style.left = (Math.random() * 100) + 'vw';
+
+        elementsLayer.appendChild(star);
+
+        gsap.fromTo(star,
+          { opacity: Math.random() * 0.2 },
+          {
+            opacity: Math.random() * 0.8 + 0.2,
+            duration: Math.random() * 1.5 + 0.5,
+            yoyo: true,
+            repeat: -1,
+            ease: "sine.inOut",
+            delay: Math.random() * 2
+          }
+        );
+      }
+    }
+
+    // --- LỆNH MỚI: Lệnh Thêm Cây ---
+    function animateTree() {
+      const tree = document.createElement('div');
+      tree.className = 'tree';
+
+      const x = getSafePosition();
+      tree.style.left = x + '%';
+
+      tree.style.width = "10px";
+      tree.style.background = "linear-gradient(#6d4c41, #3e2723)";
+
+      elementsLayer.appendChild(tree);
+
+      gsap.to(tree, {
+        height: 110,
+        duration: 1.5,
+        ease: "power2.out",
+        onComplete: () => {
+
+          const branchCount = 4;
+
+          for (let i = 0; i < branchCount; i++) {
+            const branch = document.createElement('div');
+            branch.className = 'branch';
+
+            branch.style.bottom = (30 + i * 20) + "px";
+
+            // random hướng
+            const angle = -40 + Math.random() * 80;
+            branch.style.transform = `rotate(${angle}deg)`;
+
+            tree.appendChild(branch);
+
+            // 🍃 nhiều lá nhỏ
+            for (let j = 0; j < 4; j++) {
+              const leaf = document.createElement('div');
+              leaf.className = 'leaf';
+
+              leaf.style.top = (j * 10) + "px";
+
+              // random màu xanh
+              const greens = ['#2ecc71', '#27ae60', '#6ab04c'];
+              leaf.style.background = greens[Math.floor(Math.random() * greens.length)];
+
+              branch.appendChild(leaf);
+
+              // 🔥 mỗi lá sway riêng → chuẩn bị cho gió
+              gsap.to(leaf, {
+                rotation: Math.random() * 10 - 5,
+                yoyo: true,
+                repeat: -1,
+                duration: 2 + Math.random(),
+                ease: "sine.inOut"
+              });
+            }
+          }
+
+          // thân sway nhẹ
+          gsap.to(tree, {
+            rotation: 2,
+            yoyo: true,
+            repeat: -1,
+            duration: 3,
+            ease: "sine.inOut"
+          });
+        }
+      });
+    }
+
+    function getGroundY(xPercent) {
+      const center = 50;
+      const distance = Math.abs(xPercent - center) / center;
+
+      // càng xa trung tâm → càng thấp
+      return 30 - distance * 8;
+    }
+
+    function randomPastel() {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 70%, 80%)`;
+    }
+
+
+
+
+    function animateFlower() {
+      const flower = document.createElement('div');
+      flower.className = 'flower';
+
+      const x = Math.random() * 100;
+
+      // 🔥 random trong toàn bộ vùng cỏ
+      const groundTop = getGroundY(x);
+
+      const y = groundTop - Math.random() * 20;
+
+      flower.style.left = x + '%';
+      flower.style.bottom = y + '%';
+
+      // 🌿 depth theo y (rất quan trọng)
+      const depth = 1 - (y / 30);
+
+      const scale = 0.6 + depth * 1.2;
+      const opacity = 0.6 + depth * 0.4;
+
+      const groundOffset = 2; // 👈 chỉnh số này
+      flower.style.bottom = (y - groundOffset) + '%';
+      flower.style.transform = `translateY(50%) scale(${scale})`;
+      flower.style.opacity = opacity;
+      flower.style.zIndex = Math.floor(depth * 20);
+
+      // tạo hoa
+      const head = document.createElement('div');
+      head.className = 'flower-head';
+
+      const colors = ['#ff6b6b', '#ff9ff3', '#feca57', '#74b9ff', '#b04e24', '#55d85c', '#e3e57b', 'white'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      for (let i = 0; i < 6; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.background = color;
+        petal.style.transform = `rotate(${i * 60}deg) translateY(-10px)`;
+        head.appendChild(petal);
+      }
+
+      const center = document.createElement('div');
+      center.className = 'center';
+
+      head.appendChild(center);
+      flower.appendChild(head);
+      elementsLayer.appendChild(flower);
+
+      // animation mọc
+      gsap.fromTo(flower,
+        { scale: 0, y: 20, opacity: 0 },
+        {
+          scale: scale,
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "back.out(2)"
+        }
+      );
+    }
+
+    function animateRain() {
+      gsap.to(scene, { backgroundColor: '#4a5568', duration: 2 });
+      if (!rainInterval) {
+        rainInterval = setInterval(() => { createRaindrop(); }, 50);
+      }
+
+      stopSnow();
+    }
+
+    gsap.to(".letter", {
+      rotation: 2,
+      yoyo: true,
+      repeat: -1,
+      duration: 2,
+      ease: "sine.inOut"
+    });
+
+    function createRaindrop() {
+      document.querySelectorAll('.rainbow').forEach(e => e.remove());
+      const drop = document.createElement('div');
+      drop.className = 'raindrop';
+      drop.style.left = Math.random() * 100 + 'vw';
+      elementsLayer.appendChild(drop);
+
+      gsap.to(drop, {
+        y: window.innerHeight,
+        duration: Math.random() * 0.5 + 0.5,
+        ease: "linear",
+        onComplete: () => { drop.remove(); }
+      });
+    }
+
+    function stopRain() {
+      if (rainInterval) {
+        clearInterval(rainInterval);
+        rainInterval = null;
+      }
+
+      // xoá hạt mưa còn lại
+      document.querySelectorAll('.raindrop').forEach(e => e.remove());
+    }
+
+    function createRainbow() {
+      stopRain();
+      if (isNight) {
+        hintButton("sun");
+        return;
+      }
+      gsap.to(scene, { backgroundColor: '#87CEEB', duration: 2 });
+
+      // xoá cái cũ
+      document.querySelectorAll('.rainbow').forEach(e => e.remove());
+
+      const rainbow = document.createElement('div');
+      rainbow.className = 'rainbow';
+
+      rainbow.innerHTML = `
+<svg viewBox="0 0 1000 500" width=100% height=100%>
+
+  <path d="M100 450 A400 400 0 0 1 900 450" stroke="red" stroke-width="29" fill="none"/>
+  <path d="M130 450 A370 370 0 0 1 870 450" stroke="orange" stroke-width="29" fill="none"/>
+  <path d="M160 450 A340 340 0 0 1 840 450" stroke="yellow" stroke-width="29" fill="none"/>
+  <path d="M190 450 A310 310 0 0 1 810 450" stroke="#2ecc71" stroke-width="29" fill="none"/>
+  <path d="M220 450 A280 280 0 0 1 780 450" stroke="#3498db" stroke-width="29" fill="none"/>
+  <path d="M250 450 A250 250 0 0 1 750 450" stroke="indigo" stroke-width="29" fill="none"/>
+  <path d="M280 450 A220 220 0 0 1 720 450" stroke="violet" stroke-width="29" fill="none"/>
+
+</svg>
+  `;
+
+      document.body.appendChild(rainbow);
+
+      // animation xuất hiện
+      gsap.fromTo(rainbow,
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" }
+      );
+
+      gsap.to(rainbow, {
+        opacity: 0,
+        duration: 3,
+        delay: 30, // ⏱ sau 30s mới bắt đầu biến mất
+        ease: "power1.out",
+        onComplete: () => rainbow.remove()
+      });
+
+      gsap.fromTo(".rainbow::after",
+        { x: "-100%" },
+        {
+          x: "100%",
+          duration: 4,
+          repeat: -1,
+          ease: "none"
+        }
+      );
+    }
+
+    let isRunning = false;
+
+    // document.getElementById("nameInput")
+    //   .addEventListener("keydown", function (e) {
+
+    //     if (e.key === "Enter" && !isRunning) {
+
+    //       isRunning = true;
+
+    //       const text = this.value.trim();
+    //       if (!text) return;
+
+    //       writeName(text.toUpperCase());
+
+    //       this.value = "";
+
+    //       // reset sau 1 chút
+    //       setTimeout(() => {
+    //         isRunning = false;
+    //       }, 500);
+    //     }
+
+    //   });
+    // function createFallingWord(word) {
+    //   const container = document.createElement('div');
+    //   container.className = 'cloud-text';
+
+    //   // 🎯 xuất hiện giữa màn hình
+    //   container.style.top = "30%";
+    //   container.style.left = "50%";
+    //   container.style.transform = "translateX(-50%)";
+
+    //   elementsLayer.appendChild(container);
+
+    //   // tạo chữ
+    //   word.split('').forEach((char, i) => {
+
+    //     const letter = document.createElement('div');
+    //     letter.className = 'cloud-letter';
+
+    //     const span = document.createElement('span');
+    //     span.innerText = char;
+
+    //     span.style.position = "absolute";
+    //     span.style.top = "50%";
+    //     span.style.left = "50%";
+    //     span.style.transform = "translate(-50%, -50%)";
+
+    //     letter.appendChild(span);
+    //     container.appendChild(letter);
+
+    //     // xuất hiện từng chữ
+    //     gsap.fromTo(letter,
+    //       { opacity: 0, scale: 0.5 },
+    //       {
+    //         opacity: 1,
+    //         scale: 1,
+    //         delay: i * 0.1,
+    //         duration: 0.5
+    //       }
+    //     );
+    //   });
+
+    //   // 🎬 TIMELINE RƠI
+    //   const tl = gsap.timeline();
+
+    //   tl.fromTo(container,
+    //     { opacity: 0, y: -20, scale: 0.8 },
+    //     {
+    //       opacity: 1,
+    //       y: 0,
+    //       scale: 1,
+    //       duration: 1,
+    //       ease: "power2.out"
+    //     }
+    //   )
+
+    //     // ⬇️ rơi xuống (gravity feel)
+    //     .to(container, {
+    //       y: window.innerHeight * 0.4,
+    //       duration: 4,
+    //       ease: "power2.in"
+    //     })
+
+    //     // 🌫 gần đất thì biến mất
+    //     .to(container, {
+    //       opacity: 0,
+    //       scale: 0.6,
+    //       filter: "blur(8px)",
+    //       duration: 2,
+    //       onComplete: () => container.remove()
+    //     }, "-=0.3"); // overlap để mượt
+    // }
+
+
+    // function writeName(text) {
+    //   console.log("WRITE:", text);
+
+    //   document.querySelectorAll('.cloud-text').forEach(e => e.remove());
+
+    //   const words = text.split(" ");
+
+    //   words.forEach((word, index) => {
+    //     setTimeout(() => {
+    //       createFallingWord(word);
+    //     }, index * 800);
+    //   });
+    // }
+
+    function spawnPetal(x, y) {
+
+      const petal = document.createElement('div');
+      petal.className = 'flying-petal';
+
+      petal.style.left = x + 'px';
+      petal.style.top = y + 'px';
+      petal.style.backgroundColor = randomPastel();
+
+      document.body.appendChild(petal);
+
+      const driftX = (Math.random() - 0.5) * 300;
+
+      gsap.to(petal, {
+        x: driftX,
+        y: -200 - Math.random() * 200,
+        rotation: Math.random() * 360,
+        duration: 2 + Math.random(),
+        ease: "power1.out",
+        opacity: 0,
+        onComplete: () => petal.remove()
+      });
+    }
+
+    function releasePetals() {
+
+      const flowers = document.querySelectorAll('.flower');
+
+      flowers.forEach(flower => {
+
+        if (Math.random() < 0.5) { // 50% hoa rụng
+
+          const rect = flower.getBoundingClientRect();
+
+          for (let i = 0; i < 3; i++) {
+            spawnPetal(
+              rect.left + rect.width / 2,
+              rect.top
+            );
+          }
+
+        }
+
+      });
+    }
+
+    function blowWind() {
+
+      const flowers = document.querySelectorAll('.flower');
+      if (flowers.length === 0) {
+        hintButton("flower");
+        return;
+      }
+
+      // 🌬 hoa rung mạnh trong thời gian ngắn
+      flowers.forEach(flower => {
+
+        gsap.to(flower, {
+          x: "+=20",
+          rotation: "+=6",
+          duration: 0.3,
+          yoyo: true,
+          repeat: 5,
+          ease: "sine.out",
+          delay: Math.random() * 0.5
+        });
+
+      });
+
+      // 🍃 tạo cánh hoa bay
+      releasePetals();
+    }
+
+    let snowInterval;
+
+    function startSnow() {
+
+      // tránh tạo nhiều lần
+      stopSnow();
+      stopRain();
+
+      snowInterval = setInterval(() => {
+        createSnowflake();
+      }, 50);
+    }
+
+    function stopSnow() {
+      if (snowInterval) {
+        clearInterval(snowInterval);
+        snowInterval = null;
+      }
+    }
+
+    const maxSnowOnGround = 800;
+
+    if (document.querySelectorAll('.snowflake').length > maxSnowOnGround) {
+      snow.remove();
+    }
+
+
+    function fillSnowOnGrass() {
+      const snow = document.createElement('div');
+      snow.className = 'snowflake';
+
+      const xPercent = Math.random() * 100;
+      const groundTop = getGroundY(xPercent);
+      const yPercent = groundTop - Math.random() * 20;
+
+      snow.style.left = xPercent + '%';
+      snow.style.top = (window.innerHeight * (1 - yPercent / 100)) + 'px';
+
+      const size = 3 + Math.random() * 3;
+      snow.style.width = size + 'px';
+      snow.style.height = size + 'px';
+
+      snow.style.opacity = 0.9;
+
+      document.body.appendChild(snow);
+
+      // ❄️ bắt đầu tan (delay nhẹ cho tự nhiên)
+      setTimeout(() => {
+        snow.style.transition = 'opacity 10s linear, filter 10s linear, transform 10s linear';
+
+        snow.style.opacity = 0;
+        snow.style.filter = 'blur(4px)';
+        snow.style.transform = 'scale(0.6)'; // nhỏ dần lại
+
+        // remove sau khi tan xong
+        setTimeout(() => {
+          snow.remove();
+        }, 10000);
+
+      }, 200); // delay nhẹ 0.2s cho tự nhiên
+    }
+    function createSnowflake() {
+
+      const snow = document.createElement('div');
+      snow.className = 'snowflake';
+
+      const xPercent = Math.random() * 100;
+      snow.style.left = xPercent + '%';
+
+      document.body.appendChild(snow);
+
+      const size = 4 + Math.random() * 4;
+      snow.style.width = size + 'px';
+      snow.style.height = size + 'px';
+
+      // 🎯 tính vị trí mặt đất
+      const groundYPercent = getGroundY(xPercent);
+      const groundY = window.innerHeight * (1 - groundYPercent / 100);
+      const depth = 1 - (groundYPercent / 30);
+      snow.style.transform = `scale(${0.6 + depth})`;
+
+      const drift = (Math.random() - 0.5) * 80;
+
+      // 🎬 timeline
+      const tl = gsap.timeline();
+
+      // ❄️ rơi xuống
+      tl.to(snow, {
+        y: groundY,
+        x: "+=" + drift,
+        duration: 4 + Math.random() * 2,
+        ease: "none"
+      })
+
+        // 🌱 nằm trên cỏ
+        .to(snow, {
+          scale: 0.8,
+          opacity: 0.8,
+          duration: 0.5
+        })
+
+        // 🌫 tan biến
+        .to(snow, {
+          opacity: 0,
+          duration: 2,
+          delay: 1, // ⏱ nằm lại 1s rồi mới tan
+          filter: "blur(3px)",
+          onComplete: () => {
+            if (Math.random() < 0.3) return; snow.remove()
+            snow.style.opacity = 0.9;
+            fillSnowOnGrass();
+          }
+        });
+    }
+  </script>
+  <!-- Code injected by live-server -->
+  <script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+      (function () {
+        function refreshCSS() {
+          var sheets = [].slice.call(document.getElementsByTagName("link"));
+          var head = document.getElementsByTagName("head")[0];
+          for (var i = 0; i < sheets.length; ++i) {
+            var elem = sheets[i];
+            var parent = elem.parentElement || head;
+            parent.removeChild(elem);
+            var rel = elem.rel;
+            if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+              var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+              elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+            }
+            parent.appendChild(elem);
+          }
+        }
+        var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        var address = protocol + window.location.host + window.location.pathname + '/ws';
+        var socket = new WebSocket(address);
+        socket.onmessage = function (msg) {
+          if (msg.data == 'reload') window.location.reload();
+          else if (msg.data == 'refreshcss') refreshCSS();
+        };
+        if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+          console.log('Live reload enabled.');
+          sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+        }
+      })();
+    }
+    else {
+      console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+
+    window.addEventListener("load", () => {
+      createHollywoodText();
+    });
+  </script>
+
+
+  <div id="lbdictex_find_popup" class="lbexpopup hidden" style="position: absolute; top: 0px; left: 0px;"
+    bis_skin_checked="1">
+    <div class="lbexpopup_top" bis_skin_checked="1">
+      <h2 class="fl popup_title">&nbsp;</h2>
+      <ul>
+        <li><a class="close_main popup_close" href="http://127.0.0.1:5501/index.html#">&nbsp;</a></li>
+      </ul>
+      <div class="clr" bis_skin_checked="1"></div>
+    </div>
+    <div class="popup_details" bis_skin_checked="1"></div>
+    <div class="popup_powered" bis_skin_checked="1">abc</div>
+  </div>
+  <div id="lbdictex_ask_mark" class="hidden" style="position: absolute; top: 0px; left: 0px;" bis_skin_checked="1"><a
+      class="lbdictex_ask_select" href="http://127.0.0.1:5501/index.html#">&nbsp;</a></div>
+</body>
+
+</html>
