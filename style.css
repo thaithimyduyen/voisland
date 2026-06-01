@@ -192,14 +192,28 @@
      right: 15px;
  }
 
+ .lightning {
+     position: fixed;
+     top: 0;
+     width: 2px;
+     height: 100vh;
+     background: white;
+     box-shadow: 0 0 10px white, 0 0 20px white;
+ }
+
  /* Ngôi sao */
  .star {
      position: absolute;
-     width: 3px;
-     height: 3px;
+     width: 7px;
+     height: 7px;
      background-color: white;
      border-radius: 50%;
      box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+ }
+
+ .star.day {
+     opacity: 0;
+     transition: opacity 1s;
  }
 
  /* --- LỆNH MỚI: Cấu trúc Object Cây --- */

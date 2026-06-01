@@ -8,6 +8,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script bis_use="true" type="text/javascript" charset="utf-8"
     data-bis-config="{&quot;blacklistIframeSrc&quot;:[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//www.google.com/recaptcha/enterprise/anchor&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;,&quot;//www.ukrnafta.com/data/map/&quot;,&quot;//maps.google.com/maps&quot;,&quot;//www.openstreetmap.org/export/embed.html&quot;,&quot;//www.google.com/maps/d/u/3/embed&quot;,&quot;//itm.ebaydesc.com/itmdesc&quot;,&quot;//books.google.com/books&quot;,&quot;//embed.podcasts.apple.com&quot;,&quot;//www.paypal.com/smartchat&quot;,&quot;//www.centurylink.com/assets/includes/common/sfChatiFrame.html&quot;,&quot;//macmillan-prod-gen.ada.support/embed&quot;,&quot;//macmillan-prod-gen.ada.support/chat&quot;,&quot;//ctl-consumer.my.site.com/&quot;],&quot;whitelistDomainsForPostBody&quot;:[&quot;youtube.com&quot;]}"
     data-dynamic-id="6f0f4a34-2e7f-4a60-ba83-343c885ca71a"
@@ -56,7 +57,6 @@
   <script>
     const scene = document.getElementById('scene');
     const elementsLayer = document.getElementById('elements-layer');
-    let rainInterval = null;
     const usedPositions = [];
     let isNight = false;
     const birdSVG = `
@@ -126,8 +126,8 @@
     function meteorShower() {
       console.log("isNight", isNight)
       if (!isNight) {
-        hintButton("moon");
-        return;
+        animateNight();
+        // hintButton("moon");
       }
       for (let i = 0; i < 40; i++) {
         setTimeout(() => {
@@ -206,23 +206,23 @@
 
     // --- NÂNG CẤP: Lệnh Mây với hình dạng ngẫu nhiên ---
     function animateCloud() {
+      if (!isActive) return;
       const cloud = document.createElement('div');
       cloud.className = 'cloud';
 
-      // Đặt vị trí Y ngẫu nhiên trên bầu trời
       cloud.style.top = (Math.random() * 35 + 5) + '%';
-      cloud.style.left = '-150px'; // Bắt đầu từ ngoài rìa trái
-
-      // Ngẫu nhiên hóa kích thước đám mây chính
+      cloud.style.left = '-150px';
       cloud.style.width = (Math.random() * 80 + 100) + 'px';
       cloud.style.height = (Math.random() * 20 + 30) + 'px';
-
-      // Ngẫu nhiên hóa bo góc đám mây chính
       cloud.style.borderRadius = (Math.random() * 30 + 30) + 'px';
 
       elementsLayer.appendChild(cloud);
 
-      // Hoạt ảnh trôi dạt sang phải
+      // 👉 thêm click ở đây (QUAN TRỌNG)
+      cloud.addEventListener("click", () => {
+        runRandomEffect(cloud);
+      });
+
       gsap.to(cloud, {
         x: window.innerWidth + 300,
         duration: Math.random() * 15 + 15,
@@ -231,11 +231,22 @@
       });
     }
 
+    function startCloud() {
+      function loop() {
+        animateCloud();
+
+        const delay = Math.random() * 3000 + 6000; // 8–13s
+        cloudInterval = setTimeout(loop, delay);
+      }
+
+      loop();
+    }
+
     // --- Logic Ban Đêm đã được giữ nguyên khi Thêm Sao ---
     function animateStars() {
       if (!isNight) {
-        hintButton("moon");
-        return;
+        animateNight();
+        // hintButton("moon");
       }
       gsap.to(scene, { backgroundColor: '#0B0C10', duration: 2 });
 
@@ -343,9 +354,6 @@
       return `hsl(${hue}, 70%, 80%)`;
     }
 
-
-
-
     function animateFlower() {
       const flower = document.createElement('div');
       flower.className = 'flower';
@@ -376,14 +384,43 @@
       const head = document.createElement('div');
       head.className = 'flower-head';
 
-      const colors = ['#ff6b6b', '#ff9ff3', '#feca57', '#74b9ff', '#b04e24', '#55d85c', '#e3e57b', 'white'];
+      const colors = [
+        '#ff6b81', // hồng đỏ sáng
+        '#ff9ff3', // hồng pastel
+        '#ffd166', // vàng tươi (đẹp hơn feca57)
+        '#74c0fc', // xanh da trời sáng hơn
+        '#ff8fab', // hồng đào
+        '#80ed99', // xanh lá sáng (thay 55d85c)
+        '#f9f871', // vàng chanh sáng
+        '#ffffff'  // trắng
+      ];
       const color = colors[Math.floor(Math.random() * colors.length)];
-
-      for (let i = 0; i < 6; i++) {
+      const petalCount = Math.floor(Math.random() * 4) + 6;
+      for (let i = 0; i < petalCount; i++) {
         const petal = document.createElement('div');
+
+        const rand = Math.random();
+        if (rand < 0.3) {
+          // 🌟 hoa sáng mạnh
+          petal.style.background = `radial-gradient(circle, white, ${color})`;
+          petal.style.boxShadow = `0 0 12px ${color}`;
+        } else if (rand < 0.7) {
+          // ✨ hoa sáng nhẹ
+          petal.style.background = color;
+          petal.style.boxShadow = `0 0 6px ${color}`;
+        } else {
+          // 🌸 hoa thường
+          petal.style.background = color;
+          petal.style.boxShadow = "none";
+        }
+        const brightness = 0.9 + Math.random() * 0.3;
         petal.className = 'petal';
-        petal.style.background = color;
-        petal.style.transform = `rotate(${i * 60}deg) translateY(-10px)`;
+        petal.style.filter = `brightness(${brightness})`;
+        const angle = (360 / petalCount) * i;
+        const size = 8 + Math.random() * 6;
+        petal.style.transform = `rotate(${angle}deg) translateY(-10px)`;
+        petal.style.width = size + "px";
+        petal.style.height = size * 2 + "px";
         head.appendChild(petal);
       }
 
@@ -405,24 +442,47 @@
           ease: "back.out(2)"
         }
       );
+
+      gsap.to(flower, {
+        rotation: 360,
+        duration: 20 + Math.random() * 10,
+        repeat: -1,
+        ease: "none"
+      });
     }
+
+    let rainIntensity = 0.5;
+    let isRaining = false;
+    let lightningTimeout = null;
+    let rainTween;
+    gsap.ticker.add(() => {
+      if (!isRaining) return;
+      // spawn nhiều giọt cùng lúc khi mưa to
+      const drops = Math.floor(rainIntensity * 5 + Math.random() * 2);
+
+      for (let i = 0; i < drops; i++) {
+        createRaindrop();
+      }
+    });
 
     function animateRain() {
+      isRaining = true;
       gsap.to(scene, { backgroundColor: '#4a5568', duration: 2 });
-      if (!rainInterval) {
-        rainInterval = setInterval(() => { createRaindrop(); }, 50);
-      }
+
+      rainTween = gsap.to({ value: 0 }, {
+        value: 1,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        onUpdate: function () {
+          rainIntensity = this.targets()[0].value;
+        }
+      });
 
       stopSnow();
+      startLightning();
     }
-
-    gsap.to(".letter", {
-      rotation: 2,
-      yoyo: true,
-      repeat: -1,
-      duration: 2,
-      ease: "sine.inOut"
-    });
 
     function createRaindrop() {
       document.querySelectorAll('.rainbow').forEach(e => e.remove());
@@ -440,10 +500,15 @@
     }
 
     function stopRain() {
-      if (rainInterval) {
-        clearInterval(rainInterval);
-        rainInterval = null;
+      isRaining = false;
+
+      if (rainTween) {
+        rainTween.kill();
+        rainTween = null;
       }
+
+      clearTimeout(lightningTimeout);
+      lightningTimeout = null;
 
       // xoá hạt mưa còn lại
       document.querySelectorAll('.raindrop').forEach(e => e.remove());
@@ -452,7 +517,8 @@
     function createRainbow() {
       stopRain();
       if (isNight) {
-        hintButton("sun");
+        animateSun();
+        // hintButton("sun");
         return;
       }
       gsap.to(scene, { backgroundColor: '#87CEEB', duration: 2 });
@@ -747,7 +813,179 @@
 
       }, 200); // delay nhẹ 0.2s cho tự nhiên
     }
+
+    function puffEffect(cloud) {
+      gsap.to(cloud, {
+        scale: 1.4,
+        opacity: 0,
+        duration: 0.6,
+        onComplete: () => cloud.remove()
+      });
+    }
+
+    function bounceEffect(cloud) {
+      gsap.to(cloud, {
+        y: "-=50",
+        duration: 0.3,
+        yoyo: true,
+        repeat: 3
+      });
+    }
+
+    function morphEffect(cloud) {
+      gsap.to(cloud, {
+        scaleX: 1.3,
+        scaleY: 0.7,
+        borderRadius: "60% 30% 70% 40%",
+        rotation: 5,
+        duration: 0.25,
+        yoyo: true,
+        repeat: 3,
+        ease: "power1.inOut"
+      });
+    }
+
+
+    function changeColorEffect(cloud) {
+      gsap.to(cloud, {
+        background: "linear-gradient(90deg, #ff9a9e, #fad0c4)",
+        duration: 0.5
+      });
+    }
+
+    function spawnStarEffect(cloud) {
+      for (let i = 0; i < 20; i++) {
+        createStarFromCloud(cloud);
+      }
+    }
+
+    function createStarFromCloud(cloud) {
+      const star = document.createElement("div");
+      star.className = "star";
+
+      const rect = cloud.getBoundingClientRect();
+
+      // random vị trí trong cloud
+      const offsetX = Math.random() * rect.width - rect.width / 2;
+      const offsetY = Math.random() * rect.height / 2;
+
+      star.style.left = rect.left + rect.width / 2 + offsetX + "px";
+      star.style.top = rect.top + offsetY + "px";
+
+      document.body.appendChild(star);
+
+      // random hướng bay
+      const xMove = Math.random() * 100 - 50; // trái/phải
+      const yMove = Math.random() * 100 + 50; // xuống
+
+      gsap.to(star, {
+        x: xMove,
+        y: yMove,
+        opacity: 0,
+        duration: Math.random() * 0.5 + 1.5,
+        ease: "power2.out",
+        onComplete: () => star.remove()
+      });
+    }
+
+    const effects = [
+      // puffEffect,
+      // changeColorEffect,
+      bounceEffect,
+      morphEffect,
+      spawnStarEffect
+    ];
+
+    function runRandomEffect(cloud) {
+      const randomIndex = Math.floor(Math.random() * effects.length);
+      effects[randomIndex](cloud);
+    }
+
+    function lightningFlash() {
+      const flash = document.createElement("div");
+      flash.style.position = "fixed";
+      flash.style.top = 0;
+      flash.style.left = 0;
+      flash.style.width = "100%";
+      flash.style.height = "100%";
+      flash.style.background = "white";
+      flash.style.opacity = 0;
+      flash.style.pointerEvents = "none";
+      flash.style.zIndex = 999;
+
+      document.body.appendChild(flash);
+
+      gsap.to(flash, {
+        opacity: 0.8,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1,
+        onComplete: () => flash.remove()
+      });
+    }
+
+    function createLightningSVG() {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      svg.style.position = "fixed";
+      svg.style.top = 0;
+      svg.style.left = 0;
+
+      let path = "M " + Math.random() * window.innerWidth + " 0 ";
+
+      let x = Math.random() * window.innerWidth;
+      let y = 0;
+
+      for (let i = 0; i < 8; i++) {
+        x += Math.random() * 60 - 30;
+        y += 80;
+        path += `L ${x} ${y} `;
+      }
+
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      line.setAttribute("d", path);
+      line.setAttribute("stroke", "white");
+      line.setAttribute("stroke-width", "2");
+      line.setAttribute("fill", "none");
+
+      svg.appendChild(line);
+      document.body.appendChild(svg);
+
+      gsap.fromTo(svg,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.8,
+          yoyo: true,
+          repeat: 1,
+          onComplete: () => svg.remove()
+        }
+      );
+    }
+
+    function lightningStrike() {
+      lightningFlash();   // sáng toàn màn
+      createLightningSVG();  // tia sét
+    }
+
+    function startLightning() {
+      function loop() {
+        if (!isRaining) return;
+        const delay = Math.random() * 10000 + 3000; // 3–8s
+
+        lightningTimeout = setTimeout(() => {
+          lightningStrike();
+          loop();
+        }, delay);
+      }
+
+      loop();
+    }
+
+
     function createSnowflake() {
+      if (!isActive) return;
 
       const snow = document.createElement('div');
       snow.className = 'snowflake';
@@ -800,6 +1038,12 @@
           }
         });
     }
+
+    let isActive = true;
+    document.addEventListener("visibilitychange", () => {
+      isActive = !document.hidden;
+    });
+
   </script>
   <!-- Code injected by live-server -->
   <script>
@@ -841,24 +1085,10 @@
 
     window.addEventListener("load", () => {
       createHollywoodText();
+      animateSun();
+      startCloud();
     });
   </script>
-
-
-  <div id="lbdictex_find_popup" class="lbexpopup hidden" style="position: absolute; top: 0px; left: 0px;"
-    bis_skin_checked="1">
-    <div class="lbexpopup_top" bis_skin_checked="1">
-      <h2 class="fl popup_title">&nbsp;</h2>
-      <ul>
-        <li><a class="close_main popup_close" href="http://127.0.0.1:5501/index.html#">&nbsp;</a></li>
-      </ul>
-      <div class="clr" bis_skin_checked="1"></div>
-    </div>
-    <div class="popup_details" bis_skin_checked="1"></div>
-    <div class="popup_powered" bis_skin_checked="1">abc</div>
-  </div>
-  <div id="lbdictex_ask_mark" class="hidden" style="position: absolute; top: 0px; left: 0px;" bis_skin_checked="1"><a
-      class="lbdictex_ask_select" href="http://127.0.0.1:5501/index.html#">&nbsp;</a></div>
 </body>
 
 </html>
